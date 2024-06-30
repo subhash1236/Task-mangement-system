@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Management System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <form id="filter-form">
+    <select id="filter-status">
+      <option value="">All</option>
+      <option value="Open">Open</option>
+      <option value="In Progress">In Progress</option>
+      <option value="Closed">Closed</option>
+    </select>
+    <select id="filter-priority">
+      <option value="">All</option>
+      <option value="High">High</option>
+      <option value="Medium">Medium</option>
+      <option value="Low">Low</option>
+    </select>
+    <button type="submit">Filter</button>
+  </form>
+  <div id="task-container"></div>
+  <div id="pagination-container"></div>
+  <form id="task-form">
+    <input type="text" id="title" placeholder="Title" required>
+    <textarea id="description" placeholder="Description" required></textarea>
+    <input type="datetime-local" id="dueDate" required>
+    <select id="status">
+      <option value="Open">Open</option>
+      <option value="In Progress">In Progress</option>
+      <option value="Closed">Closed</option>
+    </select>
+    <button type="submit">Add Task</button>
+  </form>
+  <script src="app.js"></script>
+</body>
+</html>

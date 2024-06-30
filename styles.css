@@ -1,0 +1,37 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  form {
+    margin: 10px 1;
+  }
+  
+  .task-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    width: 300px;
+  }
+  
+  .task-card.high {
+    border-color: red;
+  }
+  
+  .task-card.medium {
+    border-color: orange;
+  }
+  
+  .task-card.low {
+    border-color: green;
+  }
+  
+  button {
+    margin: 5px;
+  }
+  

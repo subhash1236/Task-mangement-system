@@ -1,11 +1,14 @@
+// Global variables to handle current page and tasks per page for pagination
 let currentPage = 1;
 const tasksPerPage = 5;
 let allTasks = [];
 
+// Event listeners to handle DOM content loading, task form submission, and filter form submission
 document.addEventListener('DOMContentLoaded', fetchTasks);
 document.getElementById('task-form').addEventListener('submit', addTask);
 document.getElementById('filter-form').addEventListener('submit', filterTasks);
 
+// Function to fetch tasks from the JSON server
 async function fetchTasks() {
   try {
     const response = await fetch('http://localhost:3000/tasks');
@@ -18,6 +21,7 @@ async function fetchTasks() {
   }
 }
 
+// Function to display tasks on the page
 function displayTasks(tasks) {
   const taskContainer = document.getElementById('task-container');
   taskContainer.innerHTML = '';
@@ -38,6 +42,7 @@ function displayTasks(tasks) {
   });
 }
 
+// Function to determine the priority of a task based on the time remaining
 function getPriority(dueDate) {
   const now = new Date();
   const due = new Date(dueDate);
@@ -47,12 +52,14 @@ function getPriority(dueDate) {
   return 'Low';
 }
 
+// Function to handle pagination by slicing the tasks array
 function paginate(tasks) {
   const start = (currentPage - 1) * tasksPerPage;
   const end = start + tasksPerPage;
   return tasks.slice(start, end);
 }
 
+// Function to display pagination buttons based on the number of tasks
 function displayPagination(totalTasks) {
   const totalPages = Math.ceil(totalTasks / tasksPerPage);
   const paginationContainer = document.getElementById('pagination-container');
@@ -68,6 +75,7 @@ function displayPagination(totalTasks) {
   }
 }
 
+// Function to add a new task
 async function addTask(event) {
   event.preventDefault();
   const title = document.getElementById('title').value;
@@ -88,6 +96,7 @@ async function addTask(event) {
   }
 }
 
+// Function to edit an existing task
 async function editTask(id) {
   const task = allTasks.find(task => task.id === id);
   if (!task) return;
@@ -97,6 +106,7 @@ async function editTask(id) {
   document.getElementById('dueDate').value = task.dueDate;
   document.getElementById('status').value = task.status;
 
+  // Override the form submission event to update the task instead of adding a new one
   document.getElementById('task-form').onsubmit = async (event) => {
     event.preventDefault();
     const updatedTask = {
@@ -114,7 +124,7 @@ async function editTask(id) {
       });
       if (!response.ok) throw new Error('Network response was not ok');
       document.getElementById('task-form').reset();
-      document.getElementById('task-form').onsubmit = addTask;
+      document.getElementById('task-form').onsubmit = addTask; // Reset form submission to addTask
       fetchTasks();
     } catch (error) {
       console.error('Update error:', error);
@@ -122,6 +132,7 @@ async function editTask(id) {
   };
 }
 
+// Function to delete a task
 async function deleteTask(id) {
   try {
     const response = await fetch(`http://localhost:3000/tasks/${id}`, { method: 'DELETE' });
@@ -132,6 +143,7 @@ async function deleteTask(id) {
   }
 }
 
+// Function to filter tasks based on status and priority
 function filterTasks(event) {
   event.preventDefault();
   const status = document.getElementById('filter-status').value;
